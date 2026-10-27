@@ -178,7 +178,7 @@ st.header(name)
 left, right = st.columns([1, 1.15], gap="large")
 with left:
     st.subheader("2D structure")
-    img = get_2d_image(mol, size=(520, 360), kekulize=True)
+    img = get_2d_image(mol, size=(520, 360))
     st.image(img, use_container_width=True)
     st.subheader("SMILES")
     st.text_input("Canonical SMILES", value=canonical, key=f"smiles_{name}", disabled=True)
