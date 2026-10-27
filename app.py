@@ -7,7 +7,7 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors, rdMolDescriptors, AllChem
 from rdkit.Chem import Crippen
 import py3Dmol
-def get_2d_image(smiles):
+def get_2d_image(smiles, size=None):
     url = (
         "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/"
         + requests.utils.quote(smiles, safe="")
