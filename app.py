@@ -4,9 +4,18 @@ import requests
 import streamlit as st
 import pandas as pd
 from rdkit import Chem
-from rdkit.Chem import Descriptors, rdMolDescriptors, Draw, AllChem
+from rdkit.Chem import Descriptors, rdMolDescriptors, AllChem
 from rdkit.Chem import Crippen
 import py3Dmol
+def get_2d_image(smiles):
+    url = (
+        "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/"
+        + requests.utils.quote(smiles, safe="")
+        + "/PNG"
+    )
+    response = requests.get(url, timeout=20)
+    response.raise_for_status()
+    return response.content
 from stmol import showmol
 
 st.set_page_config(page_title="Molecule Explorer", page_icon="🧬", layout="wide")
@@ -169,7 +178,7 @@ st.header(name)
 left, right = st.columns([1, 1.15], gap="large")
 with left:
     st.subheader("2D structure")
-    img = Draw.MolToImage(mol, size=(520, 360), kekulize=True)
+    img = get_2d_image(mol, size=(520, 360), kekulize=True)
     st.image(img, use_container_width=True)
     st.subheader("SMILES")
     st.text_input("Canonical SMILES", value=canonical, key=f"smiles_{name}", disabled=True)
